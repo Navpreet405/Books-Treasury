@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Book{% endblock title %}
+
+{% block body %}
+
+<style>
+    .cover{
+        height: 200px;
+        object-fit: cover;
+    }
+  </style>
+
+<!-- For Alert Messages -->
+{% if user.is_authenticated %}
+{% else %}
+{% if messages %}
+    {% for message in messages %}
+      <div class="container" style="margin-left: 30%;">
+        <div class="alert alert-warning m-2 alert-dismissible fade show" role="alert" style="width: 40%;">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    {% endfor %}
+{% endif %}
+{% endif %}
+
+<div class="container">
+    <div class="row justify-content-centre">
+        <div class="col" style="margin-top: 2%;">
+            <a href="/" class="btn btn-outline-warning my-3">Go Back</a>
+            <div style="height: 90vh; margin-bottom: 5%;">
+                <div class="card" style="width: 18rem; margin-left: 40%;">
+                    <img class="card-img-top" src="{{book.image.url}}" alt="Card image cap">
+                </div>
+            </div>
+        </div>
+        <div class="col-6" style="margin-top: 15%;margin-right: 7%;">
+            <div class="card text-center w-75 ">
+                <div class="card-header">
+                  Book Details
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{book.name}}</h5>
+                  <p class="card-text">{{book.description}}</p>
+                  <h6 class="price">Price : Rs. {{book.price}}</h6>
+                  {% if user.is_authenticated %}
+                    {% if book.pdf %}
+                      <button data-product={{book.id}} data-action="add" class="btn btn-dark my-3 update-cart" style="margin-right: 15%;">Add to Cart</button>
+                      <a href="{{book.pdf.url}}" class="btn btn-dark my-3" target="_blank">Read Online</a>
+                    {% else %}
+                    <button data-product={{book.id}} data-action="add" class="btn btn-dark my-3 update-cart">Add to Cart</button>
+                    {% endif %}
+                  {% else %}
+                  <button data-product={{book.id}} data-action="add" class="btn btn-dark my-3 update-cart" disabled>Add to Cart</button>
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+<footer class="text-muted py-5" id="footer" style="background: black; color: grey;">
+    <div class="container">
+      <p class="float-end mb-1">
+        <a class="text-decoration-none" href="#" style="color: white;">Back to top</a>
+      </p>
+      <p class="mb-1">&copy; 2021 Books Treasury all rights reserved</p>
+      <p class="mb-0">New to Books Treasury? <a class="text-decoration-none" href="/" style="color: white;">Visit our homepage</a></p>
+      <p style=" margin-top: 0.5%;"><a class="text-decoration-none" href="{% url 'misc' %}" target="_blank" style="color: white;">&#x2022; Privacy Policy</a><a class="text-decoration-none" href="{% url 'misc' %}" target="_blank" style="color: white; margin-left: 2%;">&#x2022; Terms & Conditions</a></p>
+    </div>
+  </footer>
+
+{% endblock body %}

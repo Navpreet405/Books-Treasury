@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Review{% endblock title %}
+
+{% block body %}
+
+<style>
+  #btn{
+      margin-left: 570px;
+  }
+</style>
+
+<!-- For Alert Messages -->
+{% if messages %}
+    {% for i in messages %}
+      <div class="container" style="margin-left: 30%;">
+        <div class="alert alert-success m-2 alert-dismissible fade show" role="alert" style="width: 40%;">
+            {{ i }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    {% endfor %}
+{% endif %}
+
+
+<div class="container mb-3 py-4">
+  <div class="card m-5">
+    <div class="card-body">
+      <div class="row justify-content-centre">
+      <h1 class="card-title text-center">Book Review</h5>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="form-group m-3">
+                <label for="name" class="form-label">Your Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name"required>
+            </div>
+      
+            <div class="form-group m-3">
+              <label for="bookName" class="form-label">Book Name</label>
+              <input type="text" class="form-control" id="bookName" name="bookName" placeholder="Enter Book's Name" required>
+            </div>
+      
+            <div class="form-group m-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="phone" class="form-control" id="phone" name="phone" placeholder="Enter your Phone Number" required>
+            </div>
+      
+      
+            <div class="form-group m-3">
+              <label for="desc" class="form-label">Review</label>
+              <textarea class="form-control" id="desc" rows="3" name="desc" placeholder="Your Review(s) about the Book" required></textarea>
+            </div>
+      
+            <button id="btn" class="btn btn-outline-success" type="submit">Submit</button>
+        
+        </form>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<footer class="text-muted py-5" id="footer" style="background: black; color: grey;">
+  <div class="container">
+    <p class="float-end mb-1">
+      <a class="text-decoration-none" href="#" style="color: white;">Back to top</a>
+    </p>
+    <p class="mb-1">&copy; 2021 Books Treasury all rights reserved</p>
+    <p class="mb-0">New to Books Treasury? <a class="text-decoration-none" href="/" style="color: white;">Visit our homepage</a></p>
+    <p style=" margin-top: 0.5%;"><a class="text-decoration-none" href="{% url 'misc' %}" target="_blank" style="color: white;">&#x2022; Privacy Policy</a><a class="text-decoration-none" href="{% url 'misc' %}" target="_blank" style="color: white; margin-left: 2%;">&#x2022; Terms & Conditions</a></p>
+  </div>
+</footer>
+
+{% endblock body %}
